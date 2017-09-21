@@ -7,6 +7,7 @@
 #include <QTextEdit>
 #include <QSslSocket>
 #include <QAbstractSocket>
+#include <QSslCertificate>
 
 class MainWindow : public QMainWindow
 {
@@ -17,8 +18,10 @@ class MainWindow : public QMainWindow
     QTextEdit *output;
     QSslSocket *socket;
     State state;
+    QSslCertificate certificate;
 
     void changeState(State newState);
+    void loadCACertificate();
 private slots:
     void buttonPressed();
     void connected();
@@ -26,6 +29,7 @@ private slots:
     void encrypted();
     void readyToRead();
     void error(QAbstractSocket::SocketError err);
+    void sslErrors(const QList<QSslError> &errors);
 public:
     MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();

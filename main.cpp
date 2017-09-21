@@ -8,7 +8,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     if (!QSslSocket::supportsSsl())
     {
-        QMessageBox msgBox(QMessageBox::NoIcon, "OpenSSL error", "OpenSSL library old or not present.");
+        QMessageBox msgBox(QMessageBox::Critical,
+                           "OpenSSL error",
+                           "OpenSSL library old or not present.");
         msgBox.exec();
         return -1;
     }

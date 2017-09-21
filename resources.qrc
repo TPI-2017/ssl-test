@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/ssl">
+        <file>res/TLS.ca_x509.cer</file>
+    </qresource>
+</RCC>
