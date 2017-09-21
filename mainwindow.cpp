@@ -32,6 +32,14 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::buttonPressed()
 {
     changeState(Connecting);
+    socket = new QSslSocket();
+    connect(socket, &QSslSocket::connected, this, &MainWindow::connected);
+    connect(socket, &QSslSocket::disconnected, this, &MainWindow::disconnected);
+    connect(socket, &QSslSocket::encrypted, this, &MainWindow::encrypted);
+    connect(socket, &QSslSocket::readyRead, this, &MainWindow::readyToRead);
+    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error(QAbstractSocket::SocketError)));
+
+    socket->connectToHostEncrypted(hostField->text(), 443);
 }
 
 void MainWindow::changeState(State newState)
@@ -71,11 +79,12 @@ void MainWindow::disconnected()
 
 void MainWindow::encrypted()
 {
-    output->insertPlainText("Encrypted.\n");
+    output->insertPlainText("Connection is now secure.\n");
 }
 
-void MainWindow::sslError()
+void MainWindow::error(QAbstractSocket::SocketError err)
 {
+    changeState(Idle);
 }
 
 void MainWindow::readyToRead()

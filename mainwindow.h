@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QSslSocket>
+#include <QAbstractSocket>
 
 class MainWindow : public QMainWindow
 {
@@ -24,7 +25,7 @@ private slots:
     void disconnected();
     void encrypted();
     void readyToRead();
-    void sslError();
+    void error(QAbstractSocket::SocketError err);
 public:
     MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
